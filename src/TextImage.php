@@ -67,6 +67,9 @@ class TextImage
     /** @var int|array */
     private $padding = self::DEFAULT_PADDING;
 
+    /** @var string */
+    protected $backgroundImage = '';
+
     /** Strip text string */
     const STRIP_DOTS = '...';
 
@@ -120,6 +123,24 @@ class TextImage
         $this->setBorderColor(Objects\Color::create('grey'));
     }
 
+    /**
+     * @return string
+     */
+    public function getBackgroundImage()
+    {
+        return $this->backgroundImage;
+    }
+
+    /**
+     * @param string $text
+     * @return TextImage
+     */
+    public function setBackgroundImage($path)
+    {
+        $this->backgroundImage = $path;
+
+        return $this;
+    }
 
     /**
      * Generate final image.

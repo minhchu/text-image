@@ -24,6 +24,17 @@ echo $image2->getHtmlTag();
 
 ![alt tag](https://raw.githubusercontent.com/rathouz/text-image/master/examples/assets/images/image2.png)
 
+### Image with background image ###
+
+```ruby
+$backgroundImage = new \Rathouz\TextImage\TextImage('Image with background');
+$backgroundImage->setBackgroundImage('/path/to/image.png');
+$image2 = $backgroundImage->generate();
+echo $image2->getHtmlTag();
+```
+
+![alt tag](https://raw.githubusercontent.com/rathouz/text-image/master/examples/assets/images/image2.png)
+
 ### Image with border ###
 
 ```ruby

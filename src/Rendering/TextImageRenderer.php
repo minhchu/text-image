@@ -54,6 +54,10 @@ class TextImageRenderer
             $textOffset[TextImage::OPT_TOP] += $textImage->getLineHeight();
         }
 
+        if (($watermark = $textImage->getWatermarkImage()) !== '') {
+            self::addWatermarkImage($image, $watermark);
+        }
+
         return self::generateRealImage($image, $textImage->getFormat());
     }
 
@@ -69,6 +73,44 @@ class TextImageRenderer
         }
 
         return imagecreatefromjpeg($path);
+    }
+
+    /**
+     * @param resource
+     * @param TextImage
+     * @param string
+     * @return resource
+     */
+    private static function addWatermarkImage($resource, string $path)
+    {
+        if (strpos($path, '.png') !== false) {
+            $im = imagecreatefrompng($path);
+
+            $transparency = imagecolorallocatealpha($im, 0, 0, 0, 127);
+
+            // rotate, last parameter preserves alpha when true
+            $watermark = imagerotate($im, 0, $transparency, 1);
+            imagealphablending($watermark, false);
+            
+            // set the flag to save full alpha channel information
+            imagesavealpha($watermark, true);
+
+            $imagex = imagesx($watermark);
+            $imagey = imagesy($watermark);
+
+            imagecopy(
+                $resource, 
+                $watermark,
+                0,
+                0,
+                0,
+                0,
+                $imagex,
+                $imagey,
+            );
+        }
+
+        return $resource;
     }
 
     /**

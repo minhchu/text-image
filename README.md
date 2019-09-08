@@ -10,7 +10,7 @@ Requirements
 
 Library **rathouz/text-image** requires **PHP 5.4**.
 For other requirements, please see
-[composer.json](https://github.com/rathouz/text-image/blob/master/composer.json)
+[composer.json](https://github.com/minhchu/text-image/blob/master/composer.json)
 
 
 Installation
@@ -28,7 +28,7 @@ Documentation
 ------------
 
 Learn more in the
-[documentation](https://github.com/rathouz/text-image/blob/master/docs/en/index.md).
+[documentation](https://github.com/minhchu/text-image/blob/master/docs/en/index.md).
 
 Contributing
 ------------

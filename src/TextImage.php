@@ -70,6 +70,9 @@ class TextImage
     /** @var string */
     protected $backgroundImage = '';
 
+    /** @var string */
+    protected $watermarkImage = '';
+
     /** Strip text string */
     const STRIP_DOTS = '...';
 
@@ -138,6 +141,25 @@ class TextImage
     public function setBackgroundImage($path)
     {
         $this->backgroundImage = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWatermarkImage()
+    {
+        return $this->watermarkImage;
+    }
+
+    /**
+     * @param string $path
+     * @return TextImage
+     */
+    public function setWatermarkImage($path)
+    {
+        $this->watermarkImage = $path;
 
         return $this;
     }

@@ -27,13 +27,22 @@ echo $image2->getHtmlTag();
 ### Image with background image ###
 
 ```ruby
-$backgroundImage = new \Rathouz\TextImage\TextImage('Image with background');
+$backgroundImage = new \Rathouz\TextImage\TextImage('Image with background image');
 $backgroundImage->setBackgroundImage('/path/to/image.png');
-$image2 = $backgroundImage->generate();
-echo $image2->getHtmlTag();
+$image = $backgroundImage->generate();
+echo $image->getHtmlTag();
 ```
 
-![alt tag](https://raw.githubusercontent.com/rathouz/text-image/master/examples/assets/images/image2.png)
+### Image with background watermark (image) ###
+
+```ruby
+// Watermark is automatically centered
+$backgroundImage = new \Rathouz\TextImage\TextImage('Image with watermark');
+$backgroundImage->setWatermarkImage('/path/to/image.png');
+$image = $backgroundImage->generate();
+echo $image->getHtmlTag();
+```
+
 
 ### Image with border ###
 

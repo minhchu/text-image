@@ -83,32 +83,35 @@ class TextImageRenderer
      */
     private static function addWatermarkImage($resource, string $path)
     {
-        if (strpos($path, '.png') !== false) {
-            $im = imagecreatefrompng($path);
+        $image = substr($path, -4) === '.png' ? 
+            imagecreatefrompng($path) :
+            imagecreatefromjpeg($path);
 
-            $transparency = imagecolorallocatealpha($im, 0, 0, 0, 127);
+        $transparency = imagecolorallocatealpha($image, 0, 0, 0, 127);
 
-            // rotate, last parameter preserves alpha when true
-            $watermark = imagerotate($im, 0, $transparency, 1);
-            imagealphablending($watermark, false);
-            
-            // set the flag to save full alpha channel information
-            imagesavealpha($watermark, true);
+        // rotate, last parameter preserves alpha when true
+        $watermark = imagerotate($image, 0, $transparency, 1);
+        imagealphablending($watermark, false);
+        
+        // set the flag to save full alpha channel information
+        imagesavealpha($watermark, true);
 
-            $imagex = imagesx($watermark);
-            $imagey = imagesy($watermark);
+        $watermarkWidth = imagesx($watermark);
+        $watermarkHeight = imagesy($watermark);
 
-            imagecopy(
-                $resource, 
-                $watermark,
-                0,
-                0,
-                0,
-                0,
-                $imagex,
-                $imagey,
-            );
-        }
+        $imageWidth = imagesx($resource);
+        $imageHeight = imagesy($resource);
+
+        imagecopy(
+            $resource,
+            $watermark,
+            abs($imageWidth - $watermarkWidth)/2,
+            abs($imageHeight - $watermarkHeight)/2,
+            0,
+            0,
+            $watermarkWidth,
+            $watermarkHeight,
+        );
 
         return $resource;
     }

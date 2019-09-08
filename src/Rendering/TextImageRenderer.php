@@ -18,8 +18,6 @@ use Rathouz\Tools\Objects;
  */
 class TextImageRenderer
 {
-
-
     /**
      * Render image.
      * @param TextImage $textImage
@@ -27,13 +25,17 @@ class TextImageRenderer
      */
     public static function render(TextImage $textImage)
     {
-        $image = self::createEmptyImage(
-            $textImage->getFullWidth(),
-            $textImage->getFullHeight(),
-            $textImage->getBorder(),
-            $textImage->getBackgroundColor(),
-            $textImage->getBorderColor(),
-            $textImage->getTransparentBackground()
+        $path = $textImage->getBackgroundImage(); 
+        $image =
+            $path != '' ? 
+            self::createImageFromFile($path) :
+            self::createEmptyImage(
+                $textImage->getFullWidth(),
+                $textImage->getFullHeight(),
+                $textImage->getBorder(),
+                $textImage->getBackgroundColor(),
+                $textImage->getBorderColor(),
+                $textImage->getTransparentBackground()
         );
         $textOffset = $textImage->getTextOffset();
         foreach ($textImage->getLines() as $line) {
@@ -55,6 +57,19 @@ class TextImageRenderer
         return self::generateRealImage($image, $textImage->getFormat());
     }
 
+    /**
+     * @param string
+     * @return resource|bool;
+     */
+    protected static function createImageFromFile($path)
+    {
+        // If path is a png image
+        if (substr($path, -4) === '.png') {
+            return imagecreatefrompng($path);
+        }
+
+        return imagecreatefromjpeg($path);
+    }
 
     /**
      * Create empty GD image.

@@ -73,6 +73,12 @@ class TextImage
     /** @var string */
     protected $watermarkImage = '';
 
+    /** @var string */
+    protected $watermarkText = '';
+
+    /** @var float */
+    protected $watermarkTextAngle = 0.0;
+
     /** Strip text string */
     const STRIP_DOTS = '...';
 
@@ -160,6 +166,44 @@ class TextImage
     public function setWatermarkImage($path)
     {
         $this->watermarkImage = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWatermarkText()
+    {
+        return $this->watermarkText;
+    }
+
+    /**
+     * @param string $text
+     * @return TextImage
+     */
+    public function setWatermarkText($text)
+    {
+        $this->watermarkText = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWatermarkTextAngle()
+    {
+        return $this->watermarkTextAngle;
+    }
+
+    /**
+     * @param float $angle
+     * @return TextImage
+     */
+    public function setWatermarkTextAngle($angle)
+    {
+        $this->watermarkTextAngle = $angle;
 
         return $this;
     }

@@ -58,6 +58,10 @@ class TextImageRenderer
             self::addWatermarkImage($image, $watermark);
         }
 
+        if (($watermark = $textImage->getWatermarkText()) !== '') {
+            self::addWatermarkText($image, $textImage);
+        }
+
         return self::generateRealImage($image, $textImage->getFormat());
     }
 
@@ -111,6 +115,40 @@ class TextImageRenderer
             0,
             $watermarkWidth,
             $watermarkHeight,
+        );
+
+        return $resource;
+    }
+
+    protected static function addWatermarkText($resource, TextImage $textImage)
+    {
+        $color = Objects\Color::allocateToImage(
+            $resource, 
+            $textImage->getTextColor()
+        );
+
+        $imageWidth = imagesx($resource);
+        $imageHeight = imagesy($resource);
+
+        $sizes = imagettfbbox(
+            $textImage->getFontSize(),
+            $textImage->getWatermarkTextAngle(), 
+            $textImage->getFontPath(), 
+            $textImage->getWatermarkText()
+        );
+
+        $textWidth = abs($sizes[4]-$sizes[0]);
+        $textHeight = abs($sizes[5]-$sizes[1]);
+
+        imagettftext(
+            $resource,
+            $textImage->getFontSize(),
+            $textImage->getWatermarkTextAngle(),
+            abs($imageWidth - $textWidth)/2,
+            abs($imageHeight - $textHeight)/2,
+            $color,
+            $textImage->getFontPath(),
+            $textImage->getWatermarkText()
         );
 
         return $resource;

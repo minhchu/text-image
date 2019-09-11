@@ -54,6 +54,14 @@ class TextImageRenderer
             $textOffset[TextImage::OPT_TOP] += $textImage->getLineHeight();
         }
 
+        if ($textImage->getWatermarkImage() !== '') {
+            self::addWatermarkImage($image, $textImage);
+        }
+
+        if ($textImage->getWatermarkText() !== '') {
+            self::addWatermarkText($image, $textImage);
+        }
+
         return self::generateRealImage($image, $textImage->getFormat());
     }
 
@@ -69,6 +77,83 @@ class TextImageRenderer
         }
 
         return imagecreatefromjpeg($path);
+    }
+
+    /**
+     * @param resource
+     * @param TextImage
+     * @param string
+     * @return resource
+     */
+    private static function addWatermarkImage($resource, TextImage $textImage)
+    {
+        $path = $textImage->getWatermarkImage();
+
+        $image = substr($path, -4) === '.png' ? 
+            imagecreatefrompng($path) :
+            imagecreatefromjpeg($path);
+
+        $transparency = imagecolorallocatealpha($image, 0, 0, 0, 127);
+
+        // rotate, last parameter preserves alpha when true
+        $watermark = imagerotate($image, 0, $transparency, 1);
+        imagealphablending($watermark, false);
+        
+        // set the flag to save full alpha channel information
+        imagesavealpha($watermark, true);
+
+        $watermarkWidth = imagesx($watermark);
+        $watermarkHeight = imagesy($watermark);
+
+        $imageWidth = imagesx($resource);
+        $imageHeight = imagesy($resource);
+
+        imagecopy(
+            $resource,
+            $watermark,
+            abs($imageWidth - $watermarkWidth)/2,
+            abs($imageHeight - $watermarkHeight)/2,
+            0,
+            0,
+            $watermarkWidth,
+            $watermarkHeight,
+        );
+
+        return $resource;
+    }
+
+    protected static function addWatermarkText($resource, TextImage $textImage)
+    {
+        $color = Objects\Color::allocateToImage(
+            $resource, 
+            $textImage->getTextColor()
+        );
+
+        $imageWidth = imagesx($resource);
+        $imageHeight = imagesy($resource);
+
+        $sizes = imagettfbbox(
+            $textImage->getFontSize(),
+            $textImage->getWatermarkTextAngle(), 
+            $textImage->getFontPath(), 
+            $textImage->getWatermarkText()
+        );
+
+        $textWidth = abs($sizes[4]-$sizes[0]);
+        $textHeight = abs($sizes[5]-$sizes[1]);
+
+        imagettftext(
+            $resource,
+            $textImage->getFontSize(),
+            $textImage->getWatermarkTextAngle(),
+            abs($imageWidth - $textWidth)/2,
+            abs($imageHeight - $textHeight)/2,
+            $color,
+            $textImage->getFontPath(),
+            $textImage->getWatermarkText()
+        );
+
+        return $resource;
     }
 
     /**

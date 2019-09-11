@@ -54,11 +54,11 @@ class TextImageRenderer
             $textOffset[TextImage::OPT_TOP] += $textImage->getLineHeight();
         }
 
-        if (($watermark = $textImage->getWatermarkImage()) !== '') {
-            self::addWatermarkImage($image, $watermark);
+        if ($textImage->getWatermarkImage() !== '') {
+            self::addWatermarkImage($image, $textImage);
         }
 
-        if (($watermark = $textImage->getWatermarkText()) !== '') {
+        if ($textImage->getWatermarkText() !== '') {
             self::addWatermarkText($image, $textImage);
         }
 
@@ -85,8 +85,10 @@ class TextImageRenderer
      * @param string
      * @return resource
      */
-    private static function addWatermarkImage($resource, string $path)
+    private static function addWatermarkImage($resource, TextImage $textImage)
     {
+        $path = $textImage->getWatermarkImage();
+
         $image = substr($path, -4) === '.png' ? 
             imagecreatefrompng($path) :
             imagecreatefromjpeg($path);

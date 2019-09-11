@@ -37,24 +37,28 @@ echo $image->getHtmlTag();
 
 ```ruby
 // Watermark is automatically centered
-$backgroundImage = new \Rathouz\TextImage\TextImage('Image with watermark');
+$backgroundImage = new \Rathouz\TextImage\TextImage('Image with watermarks');
 $backgroundImage->setHeight(250);
 $backgroundImage->setWatermarkImage('/path/to/image.png');
 $image = $backgroundImage->generate();
 echo $image->getHtmlTag();
 ```
 
+![alt tag](https://raw.githubusercontent.com/minhchu/text-image/master/examples/assets/images/image10.png)
+
 ### Image with background watermark (text) ###
 
 ```ruby
 // Watermark is automatically centered
-$backgroundImage = new \Rathouz\TextImage\TextImage('Image with watermark');
+$backgroundImage = new \Rathouz\TextImage\TextImage('Image with watermarks');
 $backgroundImage->setHeight(250);
 $backgroundImage->setWatermarkText('Hello world');
 $backgroundImage->setWatermarkTextAngle(45);
 $image = $backgroundImage->generate();
 echo $image->getHtmlTag();
 ```
+
+![alt tag](https://raw.githubusercontent.com/minhchu/text-image/master/examples/assets/images/image10.png)
 
 ### Image with border ###
 

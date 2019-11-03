@@ -70,6 +70,18 @@ class TextImage
     /** @var string */
     protected $backgroundImage = '';
 
+    /** @var string */
+    protected $watermarkImage = '';
+
+    /** @var string */
+    protected $watermarkText = '';
+
+    /** @var float */
+    protected $watermarkTextAngle = 0.0;
+
+    /** @var float */
+    protected $watermarkTextOpacity = 0.0;
+
     /** Strip text string */
     const STRIP_DOTS = '...';
 
@@ -138,6 +150,82 @@ class TextImage
     public function setBackgroundImage($path)
     {
         $this->backgroundImage = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWatermarkImage()
+    {
+        return $this->watermarkImage;
+    }
+
+    /**
+     * @param string $path
+     * @return TextImage
+     */
+    public function setWatermarkImage($path)
+    {
+        $this->watermarkImage = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWatermarkText()
+    {
+        return $this->watermarkText;
+    }
+
+    /**
+     * @param string $text
+     * @return TextImage
+     */
+    public function setWatermarkText($text)
+    {
+        $this->watermarkText = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWatermarkTextAngle()
+    {
+        return $this->watermarkTextAngle;
+    }
+
+    /**
+     * @param float $angle
+     * @return TextImage
+     */
+    public function setWatermarkTextAngle($angle)
+    {
+        $this->watermarkTextAngle = $angle;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWatermarkTextOpacity()
+    {
+        return $this->watermarkTextOpacity;
+    }
+
+    /**
+     * @param float $opacity
+     * @return TextImage
+     */
+    public function setWatermarkTextOpacity($opacity)
+    {
+        $this->watermarkTextOpacity = $opacity;
 
         return $this;
     }

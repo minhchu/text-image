@@ -79,6 +79,9 @@ class TextImage
     /** @var float */
     protected $watermarkTextAngle = 0.0;
 
+    /** @var float */
+    protected $watermarkTextOpacity = 0.0;
+
     /** Strip text string */
     const STRIP_DOTS = '...';
 
@@ -204,6 +207,25 @@ class TextImage
     public function setWatermarkTextAngle($angle)
     {
         $this->watermarkTextAngle = $angle;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWatermarkTextOpacity()
+    {
+        return $this->watermarkTextOpacity;
+    }
+
+    /**
+     * @param float $opacity
+     * @return TextImage
+     */
+    public function setWatermarkTextOpacity($opacity)
+    {
+        $this->watermarkTextOpacity = $opacity;
 
         return $this;
     }

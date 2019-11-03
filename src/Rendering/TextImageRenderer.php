@@ -122,11 +122,26 @@ class TextImageRenderer
         return $resource;
     }
 
+    protected static function allocateToImage($image, Objects\Color $color, $opacity = 0)
+    {
+        $rgb = $color->getRGB();
+        return imagecolorallocatealpha($image, $rgb[0], $rgb[1], $rgb[2], $opacity);
+    }
+
+    /**
+     * @param resource
+     * @param TextImage
+     * @return resource
+     */
     protected static function addWatermarkText($resource, TextImage $textImage)
     {
-        $color = Objects\Color::allocateToImage(
+        $opacity = $textImage->getWatermarkTextOpacity();
+        $opacity = 127 - intval($opacity * 127);
+
+        $color = self::allocateToImage(
             $resource, 
-            $textImage->getTextColor()
+            $textImage->getTextColor(),
+            $opacity
         );
 
         $imageWidth = imagesx($resource);

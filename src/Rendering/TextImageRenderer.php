@@ -157,12 +157,39 @@ class TextImageRenderer
         $textWidth = abs($sizes[4]-$sizes[0]);
         $textHeight = abs($sizes[5]-$sizes[1]);
 
+        $offsetY = ($imageHeight - $textHeight)/2;
+
+        // put watermark center
         imagettftext(
             $resource,
             $textImage->getFontSize(),
             $textImage->getWatermarkTextAngle(),
             abs($imageWidth - $textWidth)/2,
-            abs($imageHeight - $textHeight)/2,
+            $offsetY,
+            $color,
+            $textImage->getFontPath(),
+            $textImage->getWatermarkText()
+        );
+
+        // put watermark on the left
+        imagettftext(
+            $resource,
+            $textImage->getFontSize(),
+            $textImage->getWatermarkTextAngle(),
+            0,
+            $offsetY,
+            $color,
+            $textImage->getFontPath(),
+            $textImage->getWatermarkText()
+        );
+
+        // put watermark on the right
+        imagettftext(
+            $resource,
+            $textImage->getFontSize(),
+            $textImage->getWatermarkTextAngle(),
+            abs($imageWidth - $textWidth),
+            $offsetY,
             $color,
             $textImage->getFontPath(),
             $textImage->getWatermarkText()
